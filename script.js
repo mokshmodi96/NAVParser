@@ -81,7 +81,7 @@ function renderTable(data) {
         const tr = document.createElement("tr");
 
         [entry.schemeCode, entry.ISIN, entry.schemeName, entry.nav, entry.date]
-            .forEach(text => {
+            .forEach((text,index) => {
                 const td = document.createElement("td");
                 td.textContent = text;
                 tr.appendChild(td);

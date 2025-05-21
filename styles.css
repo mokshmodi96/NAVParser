@@ -10,7 +10,6 @@ body {
 }
 
 .container {
-    max-width: 1080px;
     margin: 0 auto;
     background: #fff;
     padding: 1.5rem;
@@ -29,31 +28,43 @@ input[type="file"] {
     margin: 1rem auto;
 }
 
-.info {
-    display: flex;
-    justify-content: space-between;
+#stats {
     margin-bottom: 1rem;
     font-weight: bold;
+}
+
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
+#nav-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+#nav-table th, #nav-table td {
+    padding: 12px;
+    text-align: center;
+    white-space: nowrap;
+    border-bottom: 1px solid #ddd;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    overflow-x: auto;
+    overflow: scroll;
 }
 
-th, td {
-    padding: 0.75rem;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
 
 tr:hover {
     background-color: #f1f1f1;
 }
 
 @media (max-width: 600px) {
-    .info {
+    #stats {
         flex-direction: column;
         align-items: center;
         gap: 0.5rem;
