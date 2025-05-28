@@ -1,19 +1,30 @@
 // Elements
-const fileInput = document.getElementById("file-input");
+// const fileInput = document.getElementById("file-input");
 const tableBody = document.getElementById("table-body");
 const statsDiv = document.getElementById("stats");
 const filterDropdown = document.getElementById("select-scheme");
 
 // Constants
 const STORAGE_KEY = "navData";
+const URL = "https://www.amfiindia.com/spages/NAVAll.txt";
+
+const fetchLatestNAVData = fetch(URL,{ headers:{
+    "Content-Type":'text/plain'
+    }}).then(r=>r.text()).then(data => {
+    return data;
+});
+
 
 // Initialize
-window.addEventListener("DOMContentLoaded", () => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-        const data = JSON.parse(stored);
-        renderTable(data);
-    }
+window.addEventListener("DOMContentLoaded", async () => {
+    // const stored = localStorage.getItem(STORAGE_KEY);
+    // if (stored) {
+    //     const data = JSON.parse(stored);
+    const data = await fetchLatestNAVData;
+    const parsed = parseNAVData(data);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+        renderTable(parsed);
+    // }
 });
 
 filterDropdown.addEventListener("change",()=>{
@@ -31,21 +42,21 @@ filterDropdown.addEventListener("change",()=>{
 })
 
 // File Upload Handler
-fileInput.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (!file || !file.name.endsWith(".txt")) {
-        alert("Please upload a valid .txt file.");
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = () => {
-        const parsed = parseNAVData(reader.result);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
-        renderTable(parsed);
-    };
-    reader.readAsText(file);
-});
+// fileInput.addEventListener("change", (e) => {
+//     const file = e.target.files[0];
+//     if (!file || !file.name.endsWith(".txt")) {
+//         alert("Please upload a valid .txt file.");
+//         return;
+//     }
+//
+//     const reader = new FileReader();
+//     reader.onload = () => {
+//         const parsed = parseNAVData(reader.result);
+//         localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+//         renderTable(parsed);
+//     };
+//     reader.readAsText(file);
+// });
 
 // Parse Function
 function parseNAVData(text) {
